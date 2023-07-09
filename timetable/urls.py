@@ -17,9 +17,10 @@ from .viewsets import (
 router = DefaultRouter()
 router.register(r"courses", CourseViewSet)
 router.register(r"venues", VenueViewSet)
-# router.register(r"schedules", ScheduleViewSet)
+router.register(r"schedules", ScheduleViewSet)
 router.register(r"exams", ExamViewSet)
 router.register(r"assignments", AssignmentViewSet)
+# router.register(r"class", KlassDetailView())
 
 urlpatterns = [
     path("api/", include(router.urls)),

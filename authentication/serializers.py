@@ -13,19 +13,30 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class CreateUserSerializer(serializers.ModelSerializer):
+    password1 = serializers.CharField(write_only=True, required=True)
+    password2 = serializers.CharField(write_only=True, required=True)
+
     class Meta:
         model = User
-        fields = "__all__"
-        extra_kwargs = {"password": {"required": True}}
+        fields = ["username", "email", "password1", "password2"]
 
     def validate(self, attrs):
         email = attrs.get("email", "").strip().lower()
         if User.objects.filter(email=email).exists():
             raise serializers.ValidationError("User with this email id already exists.")
+
+        password1 = attrs.get("password1")
+        password2 = attrs.get("password2")
+
+        if password1 != password2:
+            raise serializers.ValidationError("Passwords do not match.")
+
         return attrs
 
     def create(self, validated_data):
-        user = User.objects.create_user(**validated_data)
+        validated_data.pop("password2")
+        password = validated_data.pop("password1")
+        user = User.objects.create_user(**validated_data, password=password)
         return user
 
 

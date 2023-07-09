@@ -24,7 +24,7 @@ SITE_NAME = config("SITE_NAME", default="Django Login Logout")
 ALLOWED_HOSTS = ["*"]
 
 
-SITE_ID = int(config("SITE_ID"))
+SITE_ID = config("SITE_ID", default=1, cast=int)
 
 
 # Application definition
@@ -75,8 +75,8 @@ SOCIALACCOUNT_PROVIDERS = {
         # (``socialaccount`` app) containing the required client
         # credentials, or list them here:
         "APP": {
-            "client_id": config("GOOGLE_CLIENT_ID"),
-            "secret": config("GOOGLE_CLIENT_SECRET"),
+            "client_id": config("GOOGLE_CLIENT_ID", default="1"),
+            "secret": config("GOOGLE_CLIENT_SECRET", default=""),
             "key": config("GOOGLE_CLIENT_KEY", default=""),
         },
         # These are provider-specific settings that can only be
@@ -273,5 +273,5 @@ CSRF_TRUSTED_ORIGINS = [
 EMAIL_USE_TLS = True
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
-EMAIL_HOST_USER = config("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
+EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", deault="")

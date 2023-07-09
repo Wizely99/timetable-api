@@ -40,10 +40,8 @@ INSTALLED_APPS = [
     "users.templatetags.user_extras",
     "dashboard",
     # rest
-    "rest_framework_jwt",
-    "rest_framework_jwt.blacklist",
     "rest_framework",
-    "rest_framework.authtoken",
+    "knox",
     # extra
     "corsheaders",
     "django_extensions",
@@ -52,8 +50,6 @@ INSTALLED_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
-    "dj_rest_auth",
-    "dj_rest_auth.registration",
     # auth providers
     # Added as needed
     # Remember to add to the SOCIALACCOUNT_PROVIDERS specific settings
@@ -227,11 +223,15 @@ REST_FRAMEWORK = {
         "rest_framework.renderers.JSONRenderer",
         "rest_framework.renderers.BrowsableAPIRenderer",
     ],
-    "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework.authentication.TokenAuthentication",
-    ],
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "knox.auth.TokenAuthentication",
+        # "rest_framework.authentication.BasicAuthentication",
+    ),
 }
-
+REST_KNOX = {
+    "USER_SERIALIZER": "authentication.serializers.UserSerializer",
+    "TOKEN_TTL": datetime.timedelta(hours=48),
+}
 
 #
 # JWT settings

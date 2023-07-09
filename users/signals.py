@@ -29,7 +29,7 @@ def update_user_profile_on_social_account_added(request, sociallogin, **kwargs):
         User.objects.filter(id=sociallogin.user.id).update(**update_fields)
 
 
-@receiver(post_save, sender=settings.AUTH_USER_MODEL)
-def create_auth_token(sender, instance=None, created=False, **kwargs):
-    if created:
-        Token.objects.create(user=instance)
+# @receiver(post_save, sender=settings.AUTH_USER_MODEL)
+# def create_auth_token(sender, instance=None, created=False, **kwargs):
+#     if created:
+#         Token.objects.create(user=instance)

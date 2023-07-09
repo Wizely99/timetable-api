@@ -1,0 +1,26 @@
+name: 0 - Run Everything
+
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - 'main'
+      - 'releases/v*'
+    tags:
+      - 'v*.*.*'
+  pull_request:
+    branches:
+      - 'main'
+      - 'releases/v*'
+
+
+jobs:
+  tests:
+    uses: ./.github/workflows/tests.yaml
+  collect_static:
+    needs: tests
+    uses: ./.github/workflows/collect-static.yaml
+  build_container:
+    needs: collect_static
+    uses: ./.github/workflows/container.yaml

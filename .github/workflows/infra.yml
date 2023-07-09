@@ -1,0 +1,95 @@
+name: deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      HOSTNAME:
+        type: string
+        required: true
+        default: "tmb_api"
+      DEBUG:
+        type: string
+        required: true
+        default: "false"
+      DOMAIN_NAME:
+        type: string
+        required: true
+        default: "tmb_api.site.atomatiki.tech"
+      IMAGE_TAG:
+        type: string
+        required: true
+        default: "main"
+      TARGET_HOST:
+        type: string
+        required: true
+        default: "dev.isopride.com"
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+   ansible:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Add SSH Keys
+        run: |
+          cat << EOF > devops/ansible/devops-key
+          ${{ secrets.SSH_DEVOPS_KEY_PRIVATE }}
+          EOF
+      - name: Update devops private key permissions
+        run: |
+          chmod 400 devops/ansible/devops-key
+      - name: Install Ansible
+        run: |
+          pip install ansible
+
+      - name: Adding or Override Ansible inventory File
+        run: |
+          cat << EOF > devops/ansible/inventory.ini
+          [webservers]
+          ${{ inputs.TARGET_HOST }}
+          EOF
+
+      - name: Adding or Override Ansible Config File
+        run: |
+          cat << EOF > ./devops/ansible/ansible.cfg
+          [defaults]
+          ansible_python_interpreter='/usr/bin/python3'
+          deprecation_warnings=False
+          inventory=./inventory.ini
+          remote_user="root"
+          host_key_checking=False
+          private_key_file = ./devops-key
+          retries=2
+          EOF
+
+      - name: Adding Ansible Variables
+        run: |
+          mkdir -p devops/ansible/django-app/vars/
+          cat << EOF > devops/ansible/django-app/vars/main.yaml
+          ---
+          DATABASE_URL: "${{ secrets.DATABASE_URL }}"
+          ADMIN_USERNAME: "${{ secrets.ADMIN_USERNAME }}"
+          ADMIN_PASSWORD: "${{ secrets.ADMIN_PASSWORD }}"
+          ADMIN_EMAIL: "${{ secrets.ADMIN_EMAIL}}"
+          SITE_ID: "1"
+          SITE_NAME: "MHS TMB"
+          DEBUG: "${{ inputs.DEBUG }}"
+          SECRET_KEY: "${{ secrets.SECRET_KEY }}"
+          EMAIL_HOST_USER: "${{ secrets.EMAIL_HOST_USER }}"
+          EMAIL_HOST_PASSWORD: "${{ secrets.EMAIL_HOST_PASSWORD }}"
+          HOSTNAME: "${{ inputs.HOSTNAME }}"
+          IMAGE: "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}"
+          IMAGE_TAG: "${{ inputs.IMAGE_TAG }}"
+          DOMAIN_NAME: "${{ inputs.DOMAIN_NAME }}"
+          DOCKER_TOKEN: "${{ secrets.DOCKER_TOKEN }}"
+          DOCKER_USERNAME: "jackkweyunga"
+          EOF
+
+      - name: Run main playbook
+        run: |
+          ANSIBLE_CONFIG=devops/ansible/ansible.cfg ansible-playbook devops/ansible/main.yml

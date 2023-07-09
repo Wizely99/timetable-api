@@ -254,7 +254,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 CSRF_TRUSTED_ORIGINS = [
     "https://*.127.0.0.1",
     # add your site domain here
-    "https://tmb_api.site.atomatiki.tech"
+    "https://tmbapi.site.atomatiki.tech"
 ]
 
 # email

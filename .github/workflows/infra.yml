@@ -14,7 +14,7 @@ on:
       DOMAIN_NAME:
         type: string
         required: true
-        default: "tmb_api.site.atomatiki.tech"
+        default: "tmbapi.site.atomatiki.tech"
       IMAGE_TAG:
         type: string
         required: true

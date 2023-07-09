@@ -9,12 +9,9 @@ import datetime
 
 from django.core.management.utils import get_random_secret_key
 
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 SECRET_KEY = "django-insecure-%!ucjsng+joe#bp%xo=lqum2f!7hz!uw)p*akyne-audps(xaw"
-
 
 DEBUG = config("DEBUG", default=1, cast=bool)
 
@@ -23,9 +20,7 @@ SITE_NAME = config("SITE_NAME", default="Django Login Logout")
 # remember to change allowed hosts for security reasons
 ALLOWED_HOSTS = ["*"]
 
-
-SITE_ID = int(config("SITE_ID"))
-
+SITE_ID = config("SITE_ID", default=1, cast=int)
 
 # Application definition
 INSTALLED_APPS = [
@@ -75,8 +70,8 @@ SOCIALACCOUNT_PROVIDERS = {
         # (``socialaccount`` app) containing the required client
         # credentials, or list them here:
         "APP": {
-            "client_id": config("GOOGLE_CLIENT_ID"),
-            "secret": config("GOOGLE_CLIENT_SECRET"),
+            "client_id": config("GOOGLE_CLIENT_ID", default="1"),
+            "secret": config("GOOGLE_CLIENT_SECRET", default=""),
             "key": config("GOOGLE_CLIENT_KEY", default=""),
         },
         # These are provider-specific settings that can only be
@@ -94,7 +89,6 @@ SOCIALACCOUNT_PROVIDERS = {
         "VERIFIED_EMAIL": True,
     }
 }
-
 
 # all auth settings
 ACCOUNT_AUTHENTICATION_METHOD = "username_email"
@@ -139,7 +133,6 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 AUTH_USER_MODEL = "users.User"
 
-
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -150,7 +143,6 @@ DATABASES = {
         cast=db_url,
     )
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -170,7 +162,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -183,7 +174,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
@@ -251,7 +241,6 @@ JWT_AUTH = {
     "JWT_AUTH_COOKIE_SAMESITE": "None",
 }
 
-
 LOGIN_URL = "/accounts/login/"
 LOGOUT_URL = "/accounts/logout/"
 LOGIN_REDIRECT_URL = "/"
@@ -261,17 +250,16 @@ LOGOUT_REDIRECT_URL = "/"
 CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_ALLOW_ALL = True
 
-
 # csrf
 CSRF_TRUSTED_ORIGINS = [
     "https://*.127.0.0.1",
     # add your site domain here
+    "https://tmbapi.site.atomatiki.tech"
 ]
-
 
 # email
 EMAIL_USE_TLS = True
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
-EMAIL_HOST_USER = config("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
+EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="")

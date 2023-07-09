@@ -1,5 +1,5 @@
 {
-  "name": "tutors",
+  "name": "config",
   "version": "1.0.0",
   "description": "## Development",
   "main": "",
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jackkweyunga/tutors.git"
+    "url": "git+https://github.com/jackkweyunga/config.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/jackkweyunga/tutors/issues"
+    "url": "https://github.com/jackkweyunga/config/issues"
   },
-  "homepage": "https://github.com/jackkweyunga/tutors#readme",
+  "homepage": "https://github.com/jackkweyunga/config#readme",
   "devDependencies": {
     "tailwindcss": "^3.1.6"
   },

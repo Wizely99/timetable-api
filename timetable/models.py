@@ -21,7 +21,7 @@ class Klass(models.Model):
     courses = models.ManyToManyField(Course, through="EnrolledCourse")
 
     def __str__(self):
-        return f"{self.program} - {self.year}"
+        return f"{self.program}"
 
 
 class EnrolledCourse(models.Model):

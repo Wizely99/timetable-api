@@ -50,6 +50,7 @@ class User(AbstractUser):
 
         url = f"https://eu.ui-avatars.com/api/?name={name}&size=250&background=0D8ABC&color=fff&"
         return url
+
     @property
     def default_username(self) -> str:
         # creates a default username case not provided

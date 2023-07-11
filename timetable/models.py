@@ -19,6 +19,7 @@ class Klass(models.Model):
     code = models.CharField(max_length=255)
     semester = models.IntegerField()
     courses = models.ManyToManyField(Course, through="EnrolledCourse")
+    members = models.ManyToManyField(User)
 
     def __str__(self):
         return f"{self.program}"

@@ -7,5 +7,5 @@ class EnrolledCourseForm(forms.ModelForm):
         model = EnrolledCourse
         fields = "__all__"
         widgets = {
-            "color_code": forms.TextInput(attrs={"type": "color"}),
+            "color": forms.TextInput(attrs={"type": "color"}),
         }

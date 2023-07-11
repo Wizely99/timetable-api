@@ -58,8 +58,8 @@ class KlassDetailView(generics.RetrieveAPIView):
                     {
                         "id": assignment["id"],
                         "title": assignment["title"],
-                        "courseCode": name,
-                        "courseName": code,
+                        "courseCode": code,
+                        "courseName": name,
                         "color": color,
                         "description": assignment["description"],
                         "dueDate": datetime.strptime(

@@ -32,13 +32,13 @@ class KlassDetailView(generics.RetrieveAPIView):
     @staticmethod
     def get_schedule_data(data: dict):
         daysOfWeek = [
+            "Sunday",
             "Monday",
             "Tuesday",
             "Wednesday",
             "Thursday",
             "Friday",
             "Saturday",
-            "Sunday",
         ]
 
         # print(data)

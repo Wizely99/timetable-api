@@ -32,6 +32,10 @@ class LoginAPIView(knox_views.LoginView):
             user = serializer.validated_data["user"]
             login(request, user)
             response = super().post(request, format=None)
+            klass = user.klass_set.first()
+            if klass:
+                response.data["class_id"] = klass.id
+
         else:
             return Response(
                 {"errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST

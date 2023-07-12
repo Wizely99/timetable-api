@@ -39,9 +39,6 @@ class CreateUserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         validated_data.pop("password2")
         program_id = int(validated_data.pop("program"))
-        print("validated_data")
-        print(validated_data)
-
         password = validated_data.pop("password1")
         user = User.objects.create_user(
             **validated_data,
@@ -90,4 +87,5 @@ class LoginSerializer(serializers.Serializer):
             raise serializers.ValidationError("Wrong Credentials.")
 
         attrs["user"] = user
+        attrs["user_id"] = 2
         return attrs

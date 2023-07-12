@@ -70,3 +70,11 @@ class KlassSerializer(serializers.ModelSerializer):
     class Meta:
         model = Klass
         fields = "__all__"
+
+
+class KlassListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Klass
+        fields = ["id", "program", "code", "semester"]
+
+        # fields = "__all__"

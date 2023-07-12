@@ -1,6 +1,7 @@
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 from timetable import views
+from timetable.api.class_list import KlassList
 from timetable.api.dayview import KlassDetailView
 from rest_framework.authtoken import views as drfviews
 
@@ -25,6 +26,7 @@ router.register(r"assignments", AssignmentViewSet)
 urlpatterns = [
     path("api/", include(router.urls)),
     path("api/class/<int:pk>/", KlassDetailView.as_view(), name="class-detail"),
+    path("api/classes/", KlassList.as_view(), name="class-list"),
     path("api/schedules/list/", ScheduleList.as_view(), name="schedule-list"),
     # path("signup", views.signup),
     # path("login", views.login),

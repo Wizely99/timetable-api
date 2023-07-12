@@ -17,7 +17,7 @@ class UserSerializer(serializers.ModelSerializer):
 class CreateUserSerializer(serializers.ModelSerializer):
     password1 = serializers.CharField(write_only=True, required=True)
     password2 = serializers.CharField(write_only=True, required=True)
-    program = serializers.IntegerField()
+    program = serializers.IntegerField(write_only=True)
 
     class Meta:
         model = User
@@ -39,9 +39,14 @@ class CreateUserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         validated_data.pop("password2")
         program_id = int(validated_data.pop("program"))
+        print("validated_data")
+        print(validated_data)
 
         password = validated_data.pop("password1")
-        user = User.objects.create_user(**validated_data, password=password)
+        user = User.objects.create_user(
+            **validated_data,
+            password=password,
+        )
         # creating membership
         klass = Klass.objects.get(id=program_id)
         klass.members.add(user)

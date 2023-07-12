@@ -3,6 +3,8 @@ from django.contrib.auth import authenticate
 
 from django.contrib.auth import get_user_model
 
+from timetable.models import Klass
+
 User = get_user_model()
 
 
@@ -15,10 +17,11 @@ class UserSerializer(serializers.ModelSerializer):
 class CreateUserSerializer(serializers.ModelSerializer):
     password1 = serializers.CharField(write_only=True, required=True)
     password2 = serializers.CharField(write_only=True, required=True)
+    program = serializers.IntegerField()
 
     class Meta:
         model = User
-        fields = ["username", "email", "password1", "password2"]
+        fields = ["username", "email", "password1", "password2", "program"]
 
     def validate(self, attrs):
         email = attrs.get("email", "").strip().lower()
@@ -35,8 +38,14 @@ class CreateUserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         validated_data.pop("password2")
+        program_id = int(validated_data.pop("program"))
+
         password = validated_data.pop("password1")
         user = User.objects.create_user(**validated_data, password=password)
+        # creating membership
+        klass = Klass.objects.get(id=program_id)
+        klass.members.add(user)
+        klass.save()
         return user
 
 

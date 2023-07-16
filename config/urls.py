@@ -7,7 +7,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("accounts/", include("allauth.urls")),
     path("accounts/profile/", IndexView.as_view()),
-    path("dashboard/", include("dashboard.urls")),
+    path(r"", include("dashboard.urls")),
     path("", include("pwa.urls")),
     path("users/", include("users.urls")),
     path("timetable/", include("timetable.urls")),

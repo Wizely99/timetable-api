@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     # Added as needed
     # Remember to add to the SOCIALACCOUNT_PROVIDERS specific settings
     "allauth.socialaccount.providers.google",
+    # progressive web app
+    "pwa",
 ]
 
 MIDDLEWARE = [
@@ -254,7 +256,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 CSRF_TRUSTED_ORIGINS = [
     "https://*.127.0.0.1",
     # add your site domain here
-    "https://tmbapi.site.atomatiki.tech"
+    "https://tmbapi.site.atomatiki.tech",
 ]
 
 # email
@@ -263,3 +265,42 @@ EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="")
 EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="")
+
+
+###???Django-pwa setttings for manifest.json
+##############!!DJANGO PROGRESSING WEB APP#################
+PWA_APP_NAME = "TIMETABLE"
+PWA_APP_DESCRIPTION = "TIMETABLE PWA"
+PWA_APP_THEME_COLOR = "#000000"
+PWA_APP_BACKGROUND_COLOR = "#ffffff"
+PWA_APP_DISPLAY = "standalone"
+PWA_APP_SCOPE = "/"
+PWA_APP_ORIENTATION = "any"
+PWA_APP_START_URL = "worker/"
+PWA_APP_STATUS_BAR_COLOR = "default"
+# PWA_APP_ICONS = [
+# 	{
+# 		'src': 'static/images/icon-160x160.png',
+# 		'sizes': '160x160'
+# 	}
+# ]
+# PWA_APP_ICONS_APPLE = [
+# 	{
+# 		'src': 'static/images/icon-160x160.png',
+# 		'sizes': '160x160'
+# 	}
+# ]
+# PWA_APP_SPLASH_SCREEN = [
+# 	{
+# 		'src': 'static/images/icon.png',
+# 		'media': '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)'
+# 	}
+# ]
+PWA_APP_DIR = "ltr"
+PWA_APP_LANG = "en-US"
+
+PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, "static", "js", "serviceworker.js")
+##############!!DJANGO PROGRESSING WEB APP#################
+##############!!DJANGO PROGRESSING WEB APP#################
+##############!!DJANGO PROGRESSING WEB APP#################
+##################*****END**********################

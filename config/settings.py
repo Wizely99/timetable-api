@@ -278,12 +278,56 @@ PWA_APP_SCOPE = "/"
 PWA_APP_ORIENTATION = "any"
 PWA_APP_START_URL = "/"
 PWA_APP_STATUS_BAR_COLOR = "default"
-# PWA_APP_ICONS = [
-# 	{
-# 		'src': 'static/images/icon-160x160.png',
-# 		'sizes': '160x160'
-# 	}
-# ]
+PWA_APP_ICONS = [
+    {
+        "src": "static/assets/icons/icon-72x72.png",
+        "sizes": "72x72",
+        "type": "image/png",
+        "purpose": "maskable any",
+    },
+    {
+        "src": "static/assets/icons/icon-96x96.png",
+        "sizes": "96x96",
+        "type": "image/png",
+        "purpose": "maskable any",
+    },
+    {
+        "src": "static/assets/icons/icon-128x128.png",
+        "sizes": "128x128",
+        "type": "image/png",
+        "purpose": "maskable any",
+    },
+    {
+        "src": "static/assets/icons/icon-144x144.png",
+        "sizes": "144x144",
+        "type": "image/png",
+        "purpose": "maskable any",
+    },
+    {
+        "src": "static/assets/icons/icon-152x152.png",
+        "sizes": "152x152",
+        "type": "image/png",
+        "purpose": "maskable any",
+    },
+    {
+        "src": "static/assets/icons/icon-192x192.png",
+        "sizes": "192x192",
+        "type": "image/png",
+        "purpose": "maskable any",
+    },
+    {
+        "src": "static/assets/icons/icon-384x384.png",
+        "sizes": "384x384",
+        "type": "image/png",
+        "purpose": "maskable any",
+    },
+    {
+        "src": "static/assets/icons/icon-512x512.png",
+        "sizes": "512x512",
+        "type": "image/png",
+        "purpose": "maskable any",
+    },
+]
 # PWA_APP_ICONS_APPLE = [
 # 	{
 # 		'src': 'static/images/icon-160x160.png',

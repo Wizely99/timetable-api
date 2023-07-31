@@ -1,6 +1,7 @@
 var staticCacheName = 'djangopwa-v2';
 
 self.addEventListener('install', function (event) {
+    console.log("ServiceWorker installed");
     event.waitUntil(
         caches.open(staticCacheName).then(function (cache) {
             return cache.addAll([

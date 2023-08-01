@@ -1,0 +1,56 @@
+{% extends 'components/_details_base.html' %}
+{% load activity_tags i18n %}
+{% block scripts %}
+    
+{% endblock %}
+
+
+{% block title %}{% if user == actor %}Your feed{% else %}{{ actor }}{% endif %}{% endblock %}
+{% block content_title %}{% endblock %}
+
+{% block left %}
+    <div class="flex-col p-4 shadow bg-white">
+        <div>
+            {% if user == actor %}Your feed{% else %}{{ actor }}{% endif %}
+        </div>
+    </div>
+    <div class="shadow bg-white">
+
+        <h4 class="p-4 font-medium border-b">Options</h4>
+        <ul class="list-group divide-y">
+            <li class="p-3"><a class="text-blue-700"
+                               href="">RSS</a>
+            </li>
+            <li class="p-3"><a class="text-blue-700"
+                               href="">ATOM</a>
+            </li>
+            {% if user == actor %}{% else %}
+                <li class="p-3">
+                    <a class="text-blue-700"
+                       href=""
+                       id="unfollow_button"
+                       style="display:none">{% trans "UNFOLLOW" %}</a>
+                    <a class="text-blue-700"
+                       href=""
+                       id="follow_button">{% trans "FOLLOW" %}</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+{% endblock %}
+
+{% block right %}
+    <div class="shadow bg-white p-4">
+
+        {% if user.is_authenticated %}
+            <p><b><a href="{% actor_url user %}">{% trans "View my actions" %}</a></b></p>
+        {% endif %}
+        <ul>
+            {% for action in action_list %}
+                <li>{% include 'actstream/action.html' %}</li>
+            {% empty %}
+                {% trans "No actions yet" %}
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

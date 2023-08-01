@@ -1,0 +1,9 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% block content %}
+{% load user_extras %}
+{% include "components/_breadcrumbs.html" %}
+<div class="flex justify-center " style="padding-top: 50px;">
+    {% include 'components/_update_form.html' with object_name=object.display_name %}
+</div>
+{% endblock %}

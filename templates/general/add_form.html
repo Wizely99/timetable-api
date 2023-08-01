@@ -1,7 +1,4 @@
 {% extends 'dashboard/base.html' %}
-
-{% load i18n %}
-
 {% block content %}
 
 {% include 'components/_breadcrumbs.html' %}
@@ -15,8 +12,9 @@
 
         <div class="w-full shadow-md bg-white dark:bg-gray-800 dark:border-gray-700">
 
-            <form method="POST" enctype="multipart/form-data">
-                <div class="py-4 px-4 bg-blue-500 text-white font-medium border-b border-t text-center  uppercase">{% trans "Change Password" %}</div>
+            <form autocomplete="off" method="POST" enctype="multipart/form-data">
+                <div class="py-4 px-4 bg-blue-500 text-white font-medium border-b border-t text-center  uppercase">new
+                    {{form|get_name}}</div>
                 <div class="p-4 ">
                     <!-- Security token -->
                     {% csrf_token %}
@@ -25,13 +23,15 @@
                     <!--form field errors block-->
                     {% include 'components/forms/_formfield.html' %}
 
-                    <div class="flex justify-end flex-col space-y-4 sm:space-y-0 sm:flex-row">
+                    <div class="flex justify-end flex-col space-y-4 sm:space-y-0 sm:flex-row {% if related_urls %}justify-between{% endif %}">
+                        {% for key,value in related_urls.items %}
+                        
+                        {% include "components/buttons/_reference_add_button.html" with reference_name=key url_name=value %}
+                        {% endfor %}
 
-                        {% include 'components/buttons/_action_form_button.html' with action_name="CHANGE PASSWORD" %}
+                        {% include 'components/buttons/_action_form_button.html' with action_name="SUBMIT" %}
 
                     </div>
-                    <a class="text-sm text-blue-700 hover:underline dark:text-blue-500"
-           href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
                 </div>
             </form>
 
@@ -43,8 +43,4 @@
 
 
 
-{% endblock %}
-{% block js %}
-  {{ block.super }}
-  {{ form.media }}
 {% endblock %}

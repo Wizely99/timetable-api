@@ -1,0 +1,28 @@
+{% load i18n %}
+{% load user_extras%}
+<div class="p-4 w-full">
+        <a class="text-blue-700 text-base font-normal" href="{{ action.actor.get_absolute_url }}">{{ action.actor.username|title }}</a>
+    <span class="text-base font-normal">{{ action.get_action_display }}d {{action.content_type.name}} {{action|get_object_str|safe}}</span>
+    {% if action.action_object %}
+        {% if action.action_object.get_absolute_url %}
+            <a class="text-blue-700 text-base font-normal" href="{{ action.action_object.get_absolute_url }}">{{ action.action_object }}</a>
+        {% else %}
+            <a class="text-blue-700 text-base font-normal" href="{{ action.action_object_url }}">{{ action.action_object.display_name|lower }}</a>
+        {% endif %}
+    {% endif %}
+    {% if action.action_object and action.target %}
+        <span>to</span>
+    {% endif %}
+    {% if action.target %}
+        {% if action.target.get_absolute_url %}
+            <a class="text-blue-700 text-base font-normal" href="{{ action.target.get_absolute_url }}">{{ action.target|lower }}</a>
+        {% else %}
+            <a class="text-blue-700 text-base font-normal" href="{{ action.target_url }}">{{ action.target|lower }}</a>
+        {% endif %}
+    {% endif %}
+
+    <div class="text-xs text-blue-600 dark:text-blue-500">
+        {{ action.timestamp|timesince }} {% trans "ago" %}
+    </div>
+
+</div>

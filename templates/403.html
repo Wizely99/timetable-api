@@ -1,0 +1,22 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% block css %}
+    <link href="{% static "plugin/pages/error-page.css" %}" rel="stylesheet">
+    	<link href="https://fonts.googleapis.com/css?family=Montserrat:200,400,700" rel="stylesheet">
+		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+{% endblock %}
+{% block content %}
+   <div id="flex w-full h-screen justify-center items-center ">
+		<div class="flex-col space-y-6 mt-4 justify-center items-center">
+			<div class="">
+				<h1 class="text-center">Oops!</h1>
+				<h2 class="text-center font-bold">403 - Permission Denied</h2>
+			</div>
+            <p class="text-center font-medium">You don't have permission to access this page</p>
+		</div>
+	</div>
+{% endblock %}
+{% block footer %}
+{% endblock %}

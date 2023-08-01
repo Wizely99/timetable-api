@@ -1,0 +1,27 @@
+{% extends 'dashboard/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+{% load user_extras %}
+
+
+{% include 'components/_breadcrumbs.html' %}
+
+
+<div class=" max-w-4xl mx-auto -md:flex-col -md:space-y-4 md:flex md:space-x-4 " style="padding-top: 50px;">
+
+    <div id="left-block" class="flex-col sm:py-4 sm:px-3 md:px-1  max-w-md  mx-auto space-y-4 w-full">
+        {% block left %}{% endblock %}
+    </div>
+
+    <div class=" py-4 flex-col w-full space-y-4 mx-auto overflow-x-auto">
+        {% block right %}{% endblock %}
+    </div>
+
+
+</div>
+
+
+{% endblock %}

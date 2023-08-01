@@ -1,28 +1,33 @@
-<!-- templates/_base.html -->
-
 {% load compress %}
 {% load static %}
-
-{% load pwa %}
-
+{% load user_extras %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="">
 
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/png" href="{% static 'assets/icons/icon-48x48.png' %}" sizes="48x48">
+        <link rel="icon" type="image/png" href="{% static 'assets/icons/icon-72x128.png' %}" sizes="72x72">
+        <link rel="icon" type="image/png" href="{% static 'assets/icons/icon-96x96.png' %}" sizes="96x96">
+        <link rel="icon" type="image/png" href="{% static 'assets/icons/icon-128x128.png' %}" sizes="128x128">
+        <link rel="icon" type="image/png" href="{% static 'assets/icons/icon-152x152.png' %}" sizes="152x152">
+        <link rel="icon" type="image/png" href="{% static 'assets/icons/icon-192x192.png' %}" sizes="192x192">
+        <link rel="icon" type="image/png" href="{% static 'assets/icons/icon-384x384.png' %}" sizes="384x384">
+        <link rel="icon" type="image/png" href="{% static 'assets/icons/icon-512x512.png' %}" sizes="512x512">
+        <link rel="icon" type="image/png" href="{% static 'assets/icons/icon-144x144.png' %}" sizes="144x144">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet">
 
-        {% progressive_web_app_meta %}
-
-
-
-        {% block meta %}
-        <meta type="description" content="describe your webpage" />
-        <meta name="keywords" content="define keywords for search engine separated by comma">
-        {% endblock %}
-
-        <title>{% block title %} Home | My_site {% endblock %}</title>
+        <meta name="description"
+            content="Efficiently manage your medical equipment maintenance with our cutting-edge planning software. Stay on top of maintenance schedules and minimize downtime with our user-friendly and customizable platform. Simplify your operations and ensure your equipment is always in top condition with our innovative solution.">
+        <meta name="keywords"
+            content="medical equipment maintenance,memplas maintenance planning software,memplas,medical equipment maintenance schedules,medical equipment minimize downtime, user-friendly medical equipment maintenance planning system, customizable, innovative solution for medical equipment maintennace planning">
+        <meta name="author" content="MEMPLAS">
+        <meta name="robots" content="index, follow">
+        <title>{% block title %} {% if page_title %}{{page_title}}{% else %} {% site_name %}{% endif %} {% endblock %}
+        </title>
 
         {% compress css %}
         <link rel="stylesheet" href="{% static 'src/output.css' %}">
@@ -31,10 +36,171 @@
         <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.1/dist/flowbite.min.css" />
 
         {% block styles %} {% endblock %}
+        <style>
+            .custom-btn-outlined:hover {
+                transform: scale(0.96);
+            }
+
+            .toast {
+                animation: toast .7s forwards;
+            }
+
+            .toast-message {
+                animation: toast 1.2s forwards;
+            }
+
+            .spare-toast {
+                animation: toast .7s forwards;
+            }
+
+            @keyframes toast {
+                from {
+                    opacity: 0;
+                    transform: translateY(-100px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateY(5px);
+
+                }
+
+            }
+
+            .fadeaway {
+                animation: fadeaway 1s forwards;
+            }
+
+            @keyframes fadeaway {
+                from {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+
+                to {
+                    opacity: 0;
+                    transform: translateY(-4rem);
+
+                }
+
+            }
+        </style>
+
+        <script>
+            //hide success messages after 10 messages
+            window.onload = () => {
+                $(".toast").removeClass("hidden");
+                setTimeout(() => {
+                    $(".toast").addClass("fadeaway");
+                    setTimeout(() => {
+                        $(".toast").remove();
+                    }, 1000); // wait 1 second for the animation to complete before removing the element
+                }, 30000); // wait 30 seconds before starting the animation
+            };
+        </script>
 
     </head>
 
-    <body class="dark:bg-gray-900">
+    <body style="font-family: 'Poppins', sans-serif;" class="relative dark:bg-gray-900">
+
+        {% if messages %}
+
+        {% for message in messages  %}
+
+        <div id="toast-success"
+            class="toast hidden p-4 w-full max-w-xs text-gray-900 bg-white rounded-lg shadow dark:bg-gray-800 dark:text-gray-300 fixed z-50 top-0 right-5"
+            role="alert">
+            <div class="flex items-center mb-3">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-4 h-4 mr-4">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0M3.124 7.5A8.969 8.969 0 015.292 3m13.416 0a8.969 8.969 0 012.168 4.5" />
+                </svg>
+
+                <span class="mb-1 text-sm font-semibold text-gray-900 dark:text-white">Alert</span>
+                <button type="button"
+                    class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
+                    data-dismiss-target="#toast-success" aria-label="Close">
+                    <span class="sr-only">Close</span>
+                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="flex items-center rounded-full">
+                <div class="inline-block relative shrink-0">
+                    {% if  'success' in message.tags %}
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-10 h-10 text-green-400">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
+                    </svg>
+                    {% else  %}
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-10 h-10 text-yellow-400">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+                    </svg>
+
+
+                    {% endif %}
+
+
+                </div>
+                <div class="ml-3 text-sm font-normal">
+
+                    <div id="message_header"
+                        class="text-sm font-semibold {% if  'success' in message.tags %} text-green-400 {% else %}text-yellow-400{% endif %}">
+                        {{message.tags}}
+                    </div>
+                    <div irelatived="message_body" class="text-sm font-normal">{{message}}</div>
+                    <span class="text-xs font-medium text-blue-600 dark:text-blue-500">a few seconds ago</span>
+                </div>
+            </div>
+        </div>
+
+
+
+        {% endfor %}
+
+
+        {% endif %}
+
+
+        <!--needs change-->
+        <div id="toast-notification"
+            class="toast-message hidden p-4 w-full max-w-xs text-gray-900 bg-white rounded-lg shadow dark:bg-gray-800 dark:text-gray-300 fixed z-50 top-0 right-5"
+            role="alert">
+            <div class="flex items-center mb-3">
+                <span class="mb-1 text-sm font-semibold text-gray-900 dark:text-white">New notification</span>
+                <button type="button"
+                    class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
+                    data-dismiss-target="#toast-notification" aria-label="Close">
+                    <span class="sr-only">Close</span>
+                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="flex items-center">
+                <div class="inline-block relative shrink-0">
+                    <img class="w-8 h-8 rounded-full" src="{{user.profile_url}}" alt="user photo">
+                </div>
+                <div class="ml-3 text-sm font-normal">
+                    <div id="message_header" class="text-sm font-semibold text-gray-900 dark:text-white"></div>
+                    <div irelatived="message_body" class="text-sm font-normal"></div>
+                    <span class="text-xs font-medium text-blue-600 dark:text-blue-500">a few seconds ago</span>
+                </div>
+            </div>
+        </div>
+
+
 
 
         {% block _content %}
@@ -45,6 +211,7 @@
         <script src="https://unpkg.com/flowbite@1.5.1/dist/flowbite.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
         {% block scripts %} {% endblock %}
 
 

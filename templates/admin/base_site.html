@@ -1,0 +1,29 @@
+{% extends "admin/base.html" %}
+{% load static %}
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} |
+{{ site_title|default:_('Django site admin') }}{% endblock %}
+{% block responsive %}
+{{ block.super }}
+<link rel="icon" type="image/png" href="{% static 'assets/icons/icon-48x48.png' %}" sizes="48x48">
+<link rel="icon" type="image/png" href="{% static 'assets/icons/icon-72x128.png' %}" sizes="72x72">
+<link rel="icon" type="image/png" href="{% static 'assets/icons/icon-96x96.png' %}" sizes="96x96">
+<link rel="icon" type="image/png" href="{% static 'assets/icons/icon-128x128.png' %}" sizes="128x128">
+<link rel="icon" type="image/png" href="{% static 'assets/icons/icon-152x152.png' %}" sizes="152x152">
+<link rel="icon" type="image/png" href="{% static 'assets/icons/icon-192x192.png' %}" sizes="192x192">
+<link rel="icon" type="image/png" href="{% static 'assets/icons/icon-384x384.png' %}" sizes="384x384">
+<link rel="icon" type="image/png" href="{% static 'assets/icons/icon-512x512.png' %}" sizes="512x512">
+<link rel="icon" type="image/png" href="{% static 'assets/icons/icon-144x144.png' %}" sizes="144x144">
+
+{% endblock  %}
+{% block branding %}
+<div style="display:flex;flex-direction:row;padding:0px;" class="">
+    {% include "logo.html" %}
+
+
+    <h1 style="margin:auto 5px;font-weight:600;" id="site-name"><a
+            href="{% url 'admin:index' %}">{{ site_header|default:_('Django administration') }}</a></h1>
+</div>
+
+{% endblock %}
+
+{% block nav-global %}{% endblock %}

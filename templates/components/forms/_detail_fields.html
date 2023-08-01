@@ -1,0 +1,14 @@
+<ul class="">
+
+    {% for name, value in object.get_detail_fields %}
+        <li class="flex p-4 justify-between grid border-t font-normal text-md">
+            <span class="text-md text-teal-600 w-full font-semibold">{{ name|upper }}</span>
+            <span class="flex text-gray-600 w-full ">
+                    {% autoescape off %}
+                        {{ value}}
+                    {% endautoescape %}
+                </span>
+        </li>
+    {% endfor %}
+
+</ul>

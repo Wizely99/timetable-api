@@ -1,7 +1,15 @@
+{% load pwa %}
+
 <html>
-    <head>{% block extra_head %}{% endblock %}</head>
+
+    <head>
+        {% progressive_web_app_meta %}
+        {% block extra_head %}{% endblock %}
+    </head>
+
     <body>
         <h1>{% block title %}Django Activity Stream{% endblock %}</h1>
         {% block content %}{% endblock %}
     </body>
+
 </html>

@@ -15,7 +15,7 @@ workbox.routing.registerRoute(
     }) => request.destination === 'document' &&
     !url.pathname.startsWith('/accounts/login/'),
     new workbox.strategies.NetworkFirst({
-        cacheName: documentCacheName,
+        cacheName: timetableDocumentCacheName,
     })
 );
 
@@ -24,7 +24,7 @@ workbox.routing.registerRoute(
         request
     }) => request.destination === 'script' || request.destination === 'style',
     new workbox.strategies.StaleWhileRevalidate({
-        cacheName: staticCacheName,
+        cacheName: timetableScriptsCacheName,
     })
 );
 
@@ -33,7 +33,7 @@ workbox.routing.registerRoute(
         request
     }) => request.destination === 'image',
     new workbox.strategies.CacheFirst({
-        cacheName: staticCacheName,
+        cacheName: timetableStaticCacheName,
     })
 );
 
@@ -42,6 +42,6 @@ workbox.routing.registerRoute(
         request
     }) => request.destination === 'font',
     new workbox.strategies.CacheFirst({
-        cacheName: staticCacheName,
+        cacheName: timetableStaticCacheName,
     })
 );

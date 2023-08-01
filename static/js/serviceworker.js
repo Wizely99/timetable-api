@@ -3,14 +3,17 @@
 importScripts('https://cdnjs.cloudflare.com/ajax/libs/workbox-sw/7.0.0/workbox-sw.js');
 // importScripts('https://storage.googleapis.com/workbox-cdn/releases/6.1.1/workbox-sw.js');
 
-const staticCacheName = 'timetableStaticCacheName-v4';
-const dynamicCacheName = 'timetableDynamicCacheName-v5';
-const documentCacheName = 'timetableHtmlCacheName-v5';
+const timetableStaticCacheName = 'timetableStaticCacheName-v2';
+const timetableDynamicCacheName = 'timetableDynamicCacheName-v2';
+const timetableDocumentCacheName = 'timetableHtmlCacheName-v2';
+const timetableScriptsCacheName = 'timetableScriptsCacheName-v2';
 
 workbox.routing.registerRoute(
     ({
-        request
-    }) => request.destination === 'document',
+        request,
+        url
+    }) => request.destination === 'document' &&
+    !url.pathname.startsWith('/accounts/login/'),
     new workbox.strategies.NetworkFirst({
         cacheName: documentCacheName,
     })
@@ -40,16 +43,5 @@ workbox.routing.registerRoute(
     }) => request.destination === 'font',
     new workbox.strategies.CacheFirst({
         cacheName: staticCacheName,
-    })
-);
-
-
-
-workbox.routing.registerRoute(
-    ({
-        request
-    }) => true, // Catch-all for other requests
-    new workbox.strategies.StaleWhileRevalidate({
-        cacheName: dynamicCacheName,
     })
 );

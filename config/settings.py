@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.google",
     # progressive web app
     "pwa",
+    "notifications",
     # web push notifications
     "push_notifications",
 ]

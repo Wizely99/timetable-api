@@ -12,6 +12,7 @@ urlpatterns = [
     path("", include("pwa.urls")),
     path("users/", include("users.urls")),
     path("timetable/", include("timetable.urls")),
+    path("notifications/", include("notifications.urls")),
     path("api/auth/", include("authentication.urls")),
     #     healthcheck
     path("healthcheck/", lambda r: HttpResponse("Up and running ...", status=200)),

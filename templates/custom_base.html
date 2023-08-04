@@ -110,6 +110,19 @@
                 OneSignal.init({
                     appId: "5dcaab78-dd14-48f8-b5dd-444d0efa262f",
                 });
+                OneSignal.getUserId().then(playerId => {
+                    // Send the player ID to your Django backend
+                    console.log(player_id);
+                    fetch('/save/player/', {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            player_id: playerId
+                        }),
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                });
             });
         </script>
 

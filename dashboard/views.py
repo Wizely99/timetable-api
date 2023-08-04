@@ -19,8 +19,8 @@ class IndexView(LoginRequired, View):
 
     def get(self, request):
         context = {"user": request.user}
-        sent = send_notification(request)
-        print(sent)
+        # sent = send_notification(request)
+        # print(sent)
 
         return render(request, "dashboard/index.html", context=context)
 
@@ -49,3 +49,25 @@ def send_notification(request):
         return JsonResponse({"message": "Notification sent successfully"})
     else:
         return JsonResponse({"message": "Notification sending failed"})
+
+
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+
+
+@csrf_exempt  # Temporarily disabling CSRF protection for simplicity
+def store_player_id(request):
+    if request.method == "POST":
+        data = request.json()
+        player_id = data.get("player_id")
+        print(player_id)
+
+        # Store the player ID associated with the user in your database
+        # Replace 'user' with the actual way you identify users in your database
+        # user = get_user_somehow()
+        # if user:
+        #     user.player_id = player_id
+        #     user.save()
+        #     return JsonResponse({'message': 'Player ID stored successfully'})
+        # else:
+        #     return JsonResponse({'message': 'User not found'}, status=404)

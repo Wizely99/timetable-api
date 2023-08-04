@@ -16,7 +16,7 @@ urlpatterns = [
     #     healthcheck
     path("healthcheck/", lambda r: HttpResponse("Up and running ...", status=200)),
     path(
-        "OneSignalSDKWorker.js",
+        "push/onesignal/OneSignalSDKWorker.js",
         TemplateView.as_view(
             template_name="OneSignalSDKWorker.js", content_type="application/javascript"
         ),

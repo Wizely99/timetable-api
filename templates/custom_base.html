@@ -90,6 +90,7 @@
         </style>
 
         <script>
+            console.error("{{user.id}}");
             //hide success messages after 10 messages
             window.onload = () => {
                 $(".toast").removeClass("hidden");
@@ -127,6 +128,7 @@
                                 // Send the player ID to your Django backend
                                 let data = {
                                     player_id: playerId,
+                                    user_id: "{{user.id}}",
                                 }
                                 axios.post(
                                         "{% url 'notifications:save_player_id' %}",

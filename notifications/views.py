@@ -13,7 +13,8 @@ from notifications.models import PlayerId
 
 class CreatePlayerId(APIView):
     def post(self, request, format=None):
-        player_id = request.data.get("player_id", None)
-        PlayerId.objects.create(user=request.user, player_id=player_id)
+        player_id = request.data.get("player_id")
+        user_id = request.data.get("user_id")
+        PlayerId.objects.create(user_id=int(user_id), playerId=player_id)
 
-        return Response({"message": "Hello, world!"})
+        return Response(request.data)

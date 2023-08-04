@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from notifications.models import PlayerId
 
 from users.models import User
 from .mixins import LoginRequired
@@ -20,8 +21,8 @@ class IndexView(LoginRequired, View):
 
     def get(self, request):
         context = {"user": request.user}
-        # sent = send_notification(request)
-        # print(sent)
+        sent = send_notification(request)
+        print(sent)
 
         return render(request, "dashboard/index.html", context=context)
 
@@ -33,12 +34,13 @@ def send_notification(request):
 
     headers = {
         "Content-Type": "application/json; charset=utf-8",
-        "Authorization": f"Basic {rest_api_key}",
+        # "Authorization": f"Basic {rest_api_key}",
     }
-
+    player_ids = PlayerId.objects.filter(user_id=1).values_list("playerId", flat=True)
     payload = {
         "app_id": app_id,
-        "included_segments": ["All"],  # Send to all subscribers
+        # "included_segments": ["All"],  # Send to all subscribers
+        "include_player_ids": list(player_ids),
         "contents": {"en": "Hello, this is a test notification from Django!"},
     }
 

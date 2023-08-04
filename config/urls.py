@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from dashboard.views import IndexView
 from django.http import HttpResponse
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -14,4 +15,10 @@ urlpatterns = [
     path("api/auth/", include("authentication.urls")),
     #     healthcheck
     path("healthcheck/", lambda r: HttpResponse("Up and running ...", status=200)),
+    path(
+        "OneSignalSDKWorker.js",
+        TemplateView.as_view(
+            template_name="OneSignalSDKWorker.js", content_type="application/javascript"
+        ),
+    ),
 ]

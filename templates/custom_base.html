@@ -112,11 +112,12 @@
                     appId: "5dcaab78-dd14-48f8-b5dd-444d0efa262f",
                     allowLocalhostAsSecureOrigin: true,
                 });
+            })
 
 
 
 
-
+            OneSignal.push(function () {
                 OneSignal.on('subscriptionChange', function (isSubscribed) {
                     console.log("The user's subscription state is now:", isSubscribed);
                     if (isSubscribed) {

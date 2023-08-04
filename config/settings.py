@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     "pwa",
     "notifications",
     # web push notifications
-    "push_notifications",
+    # "push_notifications",
 ]
 
 MIDDLEWARE = [

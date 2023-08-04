@@ -107,45 +107,45 @@
         <script>
             window.OneSignal = window.OneSignal || [];
             OneSignal.push(function () {
+                console.log("initing...");
                 OneSignal.init({
                     appId: "5dcaab78-dd14-48f8-b5dd-444d0efa262f",
+                    allowLocalhostAsSecureOrigin: true,
                 });
+
+
+
 
 
                 OneSignal.on('subscriptionChange', function (isSubscribed) {
                     console.log("The user's subscription state is now:", isSubscribed);
+                    if (isSubscribed) {
+                        // User is subscribed, get player ID and send to backend
+                        OneSignal.getUserId().then(playerId => {
+                                console.log(`player_id: ${playerId}`);
+                                // Send the player ID to your Django backend
+                                let data = {
+                                    player_id: playerId,
+                                }
+                                axios.post(
+                                        "{% url 'notifications:save_player_id' %}",
+                                        data, {
+                                            headers: {
+                                                "X-CSRFToken": "{{ csrf_token }}"
+                                            }
+                                        })
+                                    .then(function (response) {
+                                        console.log("success");
+                                        console.log(response);
+                                    }, 5000);
 
+                            })
+                            .catch(function (error) {
+                                //handle error
+                                console.error(error);
 
-
-                    OneSignal.on('subscriptionChange', function (isSubscribed) {
-                        if (isSubscribed) {
-                            // User is subscribed, get player ID and send to backend
-                            OneSignal.getUserId().then(playerId => {
-                                    console.log();
-                                    // Send the player ID to your Django backend
-                                    let data = {
-                                        player_id: playerId,
-                                    }
-                                    axios.post(
-                                            "{% url 'notifications:save_player_id' %}",
-                                            data, {
-                                                headers: {
-                                                    "X-CSRFToken": "{{ csrf_token }}"
-                                                }
-                                            })
-                                        .then(function (response) {
-                                            console.log("success");
-                                            console.log(response);
-                                        }, 5000);
-
-                                })
-                                .catch(function (error) {
-                                    //handle error
-                                    console.error(error);
-
-                                });
-                        }
-                    })
+                            });
+                    }
                 });
             });
         </script>
